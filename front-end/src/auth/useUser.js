@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { useToken } from "./useToken";
 
+export const getUserFromToken = (token) => {
+  if (token == null) return null;
+  const encodedPayload = token.split(".")[1];
+  return JSON.parse(atob(encodedPayload));
+};
+
 export const useUser = () => {
   const [token] = useToken();
 

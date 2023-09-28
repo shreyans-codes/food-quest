@@ -52,9 +52,10 @@ const LogInPage = () => {
         elevation={6}
         square
         sx={{
-          // backgroundColor: (t) => t.palette.grey[900],
-          backgroundColor: "gray",
-          // color: "white",
+          backgroundColor: (t) =>
+            t.palette.mode === "light"
+              ? t.palette.grey[50]
+              : t.palette.grey[900],
         }}
       >
         <Box
@@ -70,7 +71,7 @@ const LogInPage = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log in to FoodSwamp
+            Log in to FoodQuest
           </Typography>
           <Box
             component="form"
