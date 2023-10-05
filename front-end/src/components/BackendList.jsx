@@ -6,7 +6,7 @@ import { DeleteOutline } from "@mui/icons-material";
 import jwt_token from "../variables/jwt_token";
 
 var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${jwt_token}`);
+myHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
 myHeaders.append("Cookie", "JSESSIONID=863EF35CE0D4CF579E1D3EFDC80AA317");
 const deleteData = (id) => {
   var requestOptions = {

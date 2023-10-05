@@ -48,7 +48,7 @@ function App() {
     resetInputValue();
   };
   return (
-    <div id="root" style={{ alignItems: "center" }}>
+    <>
       <AppBarComponent />
       <Paper
         sx={{
@@ -57,6 +57,11 @@ function App() {
           alignItems: "center",
           margin: "2rem auto",
           justifyContent: "center",
+          color: (t) => {
+            return t.palette.mode === "light"
+              ? t.palette.grey[50]
+              : t.palette.grey[900];
+          },
           width: 400,
         }}
       >
@@ -85,7 +90,7 @@ function App() {
       ) : null}
       <Popular />
       <BackendList />
-    </div>
+    </>
   );
 }
 

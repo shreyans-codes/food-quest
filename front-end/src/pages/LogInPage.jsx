@@ -8,20 +8,38 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useContext, useState } from "react";
+import { useToken } from "../auth/useToken";
+import { useUser } from "../auth/useUser";
+import { AuthContext } from "../auth/AuthContext";
 
 const LogInPage = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useToken();
+  const user = useUser();
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const loginToAccount = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
+    const response = await axios.post("http://localhost:8080/auth/login", {
+      username: data.get("username"),
       password: data.get("password"),
     });
+    const jwt_token = response.data["jwt"];
+    console.log("Token: ", jwt_token);
+    setToken(jwt_token);
+    dispatch({ type: "LOGIN", payload: user });
+    navigate("/");
+    return <Navigate to={"/"} />;
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
 
   return (
@@ -76,20 +94,20 @@ const LogInPage = () => {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={loginToAccount}
             sx={{ mt: 1 }}
           >
             <TextField
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               margin="normal"
               required
               fullWidth
               color="secondary"
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="username"
+              label="Enter Username"
+              name="username"
+              autoComplete="username"
               sx={{
                 color: "white",
               }}
@@ -114,7 +132,7 @@ const LogInPage = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Log In
             </Button>
             <Grid container>
               <Grid item xs>
