@@ -8,10 +8,10 @@ import {
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import React from "react";
 import { SaveAlt } from "@mui/icons-material";
+import myHeaders from "../variables/myHeaders";
 
 const saveData = (item) => {
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+  var searchHeader = myHeaders;
   var raw = JSON.stringify({
     title: item.title,
     description: item.summary,
@@ -21,7 +21,7 @@ const saveData = (item) => {
 
   var requestOptions = {
     method: "POST",
-    headers: myHeaders,
+    headers: searchHeader,
     body: raw,
     redirect: "follow",
   };

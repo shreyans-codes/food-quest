@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { AuthContext, AuthContextProvider } from "./auth/AuthContext";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
-import LogInPage from "./pages/LogInPage";
 import App from "./App";
 import { useTheme } from "@mui/material";
+import LogInPage from "./pages/LoginPage";
 
 const Home = () => {
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });

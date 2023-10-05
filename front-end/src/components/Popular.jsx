@@ -11,13 +11,10 @@ import "@splidejs/react-splide/css";
 import RecipeCard from "./RecipeCard";
 import { SaveAlt } from "@mui/icons-material";
 import jwt_token from "../variables/jwt_token";
+import myHeaders from "../variables/myHeaders";
 
 const saveData = (item) => {
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  myHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-  myHeaders.append("Cookie", "JSESSIONID=863EF35CE0D4CF579E1D3EFDC80AA317");
+  var popularHeader = myHeaders;
 
   var raw = JSON.stringify({
     title: item.title,
@@ -28,7 +25,7 @@ const saveData = (item) => {
 
   var requestOptions = {
     method: "POST",
-    headers: myHeaders,
+    headers: popularHeader,
     body: raw,
     redirect: "follow",
   };
@@ -46,11 +43,14 @@ const Popular = () => {
   const tags = ["vegetarian"];
   useEffect(() => {
     const check = localStorage.getItem(storageVal);
+    console.log(import.meta.env.VITE_APP_API_KEY);
     if (check) {
       setPopular(JSON.parse(check));
     } else {
       fetch(
-        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=${numberOfRecipes}&tags=${tags}`
+        `https://api.spoonacular.com/recipes/random?apiKey=${
+          import.meta.env.VITE_APP_API_KEY
+        }&number=${numberOfRecipes}&tags=${tags}`
       )
         .then((response) => response.json())
         .then((data, i) => {

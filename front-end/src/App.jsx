@@ -31,7 +31,9 @@ function App() {
     setLoading(true);
     console.log(inputValue);
     fetch(
-      `https://api.spoonacular.com/recipes/complexSearch?query=${inputValue.value}&apiKey=${process.env.REACT_APP_API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?query=${
+        inputValue.value
+      }&apiKey=${import.meta.env.VITE_APP_API_KEY}`
     )
       .then((response) => response.json())
       .then((data, i) => {
