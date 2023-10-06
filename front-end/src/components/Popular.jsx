@@ -1,16 +1,9 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import { Button, Typography } from "@mui/material";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React, { useEffect, useState } from "react";
 import "@splidejs/react-splide/css";
 import RecipeCard from "./RecipeCard";
 import { SaveAlt } from "@mui/icons-material";
-import jwt_token from "../variables/jwt_token";
 import myHeaders from "../variables/myHeaders";
 
 const saveData = (item) => {
@@ -109,68 +102,8 @@ const Popular = () => {
           );
         })}
       </Splide>
-      {/* <Splide
-        tag="section"
-        options={{
-          perPage: 4,
-          drag: "free",
-          arrows: true,
-          pagination: true,
-          padding: "3rem",
-          gap: "5rem",
-        }}
-      >
-        <SplideTrack>
-          {popular.map((item) => {
-            const itemSet = {
-              title: item["title"],
-              image: item["image"],
-              summary: item["summary"],
-            };
-            console.log("Being Called with: ", item["title"]);
-            return (
-              <div key={item.id}>
-                <RecipeCard item={itemSet} key={item["id"]}></RecipeCard>
-                <Button
-                  sx={{
-                    marginLeft: "0.7em",
-                  }}
-                  onClick={() => saveData(itemSet)}
-                  startIcon={<SaveAlt />}
-                >
-                  Save
-                </Button>
-              </div>
-            );
-          })}
-        </SplideTrack>
-      </Splide> */}
     </>
   );
 };
 
 export default Popular;
-
-/* <Card
-                  key={item.key}
-                  sx={{
-                    width: 345,
-                    height: 350,
-                    overflow: "hidden",
-                    margin: "2px 8px",
-                  }}
-                >
-                  <CardMedia
-                    sx={{ height: 140, p: "2px" }}
-                    image={item["image"]}
-                    title={"Photo: " + item["title"]}
-                  />
-                  <CardContent>
-                    <Typography variant="h5" component="div">
-                      {item["title"]}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {item["summary"]}
-                    </Typography>
-                  </CardContent>
-                </Card> */

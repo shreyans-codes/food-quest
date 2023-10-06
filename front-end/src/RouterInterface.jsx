@@ -6,7 +6,7 @@ import App from "./App";
 import { useTheme } from "@mui/material";
 import LogInPage from "./pages/LoginPage";
 
-const Home = () => {
+const RouterInterface = () => {
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
@@ -44,4 +44,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default RouterInterface;

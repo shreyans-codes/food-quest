@@ -1,6 +1,6 @@
 import { ThemeProvider, createTheme } from "@mui/material";
 import React from "react";
-import Home from "../Home";
+import RouterInterface from "../RouterInterface";
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
@@ -28,7 +28,7 @@ export default function ToggleColorMode() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <Home />
+        <RouterInterface />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
