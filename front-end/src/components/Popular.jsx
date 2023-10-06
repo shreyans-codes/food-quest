@@ -87,16 +87,12 @@ const Popular = () => {
           return (
             <SplideSlide key={item.id}>
               <div>
-                <RecipeCard item={itemSet} key={item["id"]}></RecipeCard>
-                <Button
-                  sx={{
-                    marginLeft: "0.7em",
-                  }}
-                  onClick={() => saveData(itemSet)}
-                  startIcon={<SaveAlt />}
-                >
-                  Save
-                </Button>
+                <RecipeCard
+                  item={itemSet}
+                  key={item["id"]}
+                  saveButton={true}
+                  onSaveClick={() => saveData(itemSet)}
+                ></RecipeCard>
               </div>
             </SplideSlide>
           );

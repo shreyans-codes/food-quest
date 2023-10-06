@@ -36,10 +36,6 @@ const LogInPage = () => {
     dispatch({ type: "LOGIN", payload: user });
     navigate("/");
     return <Navigate to={"/"} />;
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
   };
 
   return (
