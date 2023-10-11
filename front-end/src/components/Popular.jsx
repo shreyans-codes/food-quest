@@ -1,9 +1,8 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React, { useEffect, useState } from "react";
 import "@splidejs/react-splide/css";
 import RecipeCard from "./RecipeCard";
-import { SaveAlt } from "@mui/icons-material";
 import myHeaders from "../variables/myHeaders";
 
 const saveData = (item) => {

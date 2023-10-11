@@ -1,5 +1,3 @@
-import { SearchOutlined } from "@mui/icons-material";
-import { IconButton, InputBase, Paper, Typography } from "@mui/material";
 import React, { useState } from "react";
 import SearchResult from "./SearchResult";
 
@@ -23,6 +21,7 @@ const SearchInputBar = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   const submitSearch = (e) => {
+    // console.log("Here and: ", inputValue);
     e.preventDefault();
     setLoading(true);
     console.log(inputValue);
@@ -35,7 +34,7 @@ const SearchInputBar = () => {
       .then((data, i) => {
         console.log(data["results"]);
         setSearchResults(data["results"]);
-        // console.log("Search Result: ", searchResults);
+        console.log("Search Result: ", searchResults);
         setLoading(false);
       })
       .catch((error) => {
@@ -47,40 +46,27 @@ const SearchInputBar = () => {
   };
   return (
     <div>
-      <Paper
-        sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          margin: "2rem auto",
-          justifyContent: "center",
-          color: (t) => {
-            return t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900];
-          },
-          width: 400,
-        }}
-      >
-        <InputBase
-          {...inputValue}
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Enter what recipe to search?"
-        />
-        <IconButton
-          type="button"
-          sx={{ p: "10px" }}
-          aria-label="search"
-          onClick={submitSearch}
-        >
-          <SearchOutlined />
-        </IconButton>
-      </Paper>
+      <div className="w-fit m-auto">
+        <div className="join">
+          <input
+            {...inputValue}
+            className="w-auto input input-bordered input-primary join-item"
+            placeholder="Enter what recipe to search?"
+            size={50}
+          />
+          <button
+            className="btn w-fit p-2 btn-primary btn-square join-item"
+            onClick={submitSearch}
+          >
+            Search
+          </button>
+        </div>
+      </div>
       {searchResults.length > 0 ? (
         loading ? (
-          <Typography>Loading... </Typography>
+          <div>Loading... </div>
         ) : error ? (
-          <Typography>Error encountered</Typography>
+          <div>Error encountered</div>
         ) : (
           <SearchResult items={searchResults} />
         )

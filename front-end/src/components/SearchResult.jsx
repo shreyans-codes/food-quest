@@ -1,13 +1,5 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@mui/material";
-import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React from "react";
-import { SaveAlt } from "@mui/icons-material";
 import myHeaders from "../variables/myHeaders";
 
 const saveData = (item) => {
@@ -34,43 +26,34 @@ const saveData = (item) => {
 
 const SearchCard = ({ item }) => {
   return (
-    <Card
-      key={item.key}
-      sx={{
-        width: 345,
-        maxHeight: 350,
-        overflow: "hidden",
-        margin: "2px 8px",
-      }}
+    <div
+      className="card bg-base-100 shadow-xl"
+      style={{ width: 345, height: 300, overflow: "hidden" }}
     >
-      <CardMedia
-        sx={{ height: 140, p: "2px" }}
-        image={item.image}
-        title={"Photo: " + item.title}
-      />
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {item.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <div dangerouslySetInnerHTML={{ __html: item.summary }} />
-        </Typography>
-      </CardContent>
-    </Card>
+      <figure style={{ minHeight: "140px", maxHeight: "140px" }}>
+        <img src={item.image} alt={item.title} title={"Photo: " + item.title} />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{item.title}</h2>
+        <div className="card-actions justify-end">
+          <button
+            className="btn btn-outline btn-accent"
+            onClick={() => saveData(item)}
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
   );
 };
 
 const SearchResult = ({ items }) => {
   return (
     <div>
-      <Typography
-        variant="h3"
-        style={{
-          marginLeft: "3rem",
-        }}
-      >
-        Search Results
-      </Typography>
+      <article className="prose ml-12">
+        <h1>Search Results</h1>
+      </article>
       <Splide
         tag="section"
         options={{
@@ -92,18 +75,7 @@ const SearchResult = ({ items }) => {
           console.log(item.name);
           return (
             <SplideSlide key={item.id}>
-              <div>
-                <SearchCard item={itemSet} key={item.id} />
-                <Button
-                  sx={{
-                    marginLeft: "0.7em",
-                  }}
-                  onClick={() => saveData(itemSet)}
-                  startIcon={<SaveAlt />}
-                >
-                  Save
-                </Button>
-              </div>
+              <SearchCard item={itemSet} key={item.id} />
             </SplideSlide>
           );
         })}
