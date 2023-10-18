@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { useToken } from "./useToken";
 
+//? How to check if token is null... The internet answers are not working
+
 export const getUserFromToken = (token) => {
-  if (token == null) return null;
+  if (!token) {
+    console.log("Recieved token: ", token);
+    return null;
+  }
   const encodedPayload = token.split(".")[1];
   return JSON.parse(atob(encodedPayload));
 };

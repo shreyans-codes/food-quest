@@ -4,7 +4,8 @@ import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { useTheme } from "@mui/material";
-import LogInPage from "./pages/LoginPage";
+import LogInPage from "./pages/LogInPage";
+import SignUp from "./pages/SignUp";
 
 const RouterInterface = () => {
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -36,6 +37,7 @@ const RouterInterface = () => {
                   </RequireAuth>
                 }
               />
+              <Route path="signup" element={<SignUp />} />
             </Route>
           </Routes>
         </BrowserRouter>
