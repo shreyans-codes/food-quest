@@ -1,23 +1,30 @@
 import React, { useContext } from "react";
 import { AuthContext, AuthContextProvider } from "./auth/AuthContext";
 import { Navigate, Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App";
 import { useTheme } from "@mui/material";
 import LogInPage from "./pages/LogInPage";
 import SignUp from "./pages/SignUp";
+import VerifyPage from "./pages/VerifyPage";
 
 const RouterInterface = () => {
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
+  // ? Can't use navigate here
+  // const navigate = useNavigate();
 
   const currentUser = useContext(AuthContext);
   const RequireAuth = ({ children }) => {
     console.log(currentUser);
     if (currentUser.currentUser === null) {
       console.log("Here with null");
-      return <Navigate to={"/login"} />;
+      if (currentUser.isEnabled) {
+        return <Navigate to={"/verify"} />;
+      } else {
+        return <Navigate to={"/login"} />;
+      }
     } else {
       return children;
     }
@@ -38,6 +45,7 @@ const RouterInterface = () => {
                 }
               />
               <Route path="signup" element={<SignUp />} />
+              <Route path="verify" element={<VerifyPage />} />
             </Route>
           </Routes>
         </BrowserRouter>

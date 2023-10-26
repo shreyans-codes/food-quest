@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideImageComponent from "../components/SideImageComponent";
+import VerifyPage from "./VerifyPage";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const mfaEnableRef = useRef(null);
   const navigate = useNavigate();
   const signUpToAccount = async (event) => {
     event.preventDefault();
@@ -19,11 +21,14 @@ const SignUp = () => {
       password: password,
       firstName: firstName,
       lastName: lastName,
+      mfaEnabled: mfaEnableRef.current.checked,
     });
-    console.log("Response from registration: ", response.body);
+    console.log("Response from registration: ", response.data);
     if (response.status === 200) {
       document.getElementById("my_modal").showModal();
-      navigate("/login");
+      if (mfaEnableRef.current.checked)
+        navigate("/verify", {state: {username: username,password: password, secretImage: response.data.secretImageUri}})
+      else navigate("/login");
     }
     // document.getElementById("my_modal").showModal();
   };
@@ -91,6 +96,7 @@ const SignUp = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Type here"
             className="input input-bordered w-full"
+            autoComplete="new-password"
           />
           <label className="label">
             <span className="label-text">Confirm Password</span>
@@ -102,6 +108,16 @@ const SignUp = () => {
             placeholder="Type here"
             className="input input-bordered w-full"
           />
+          <div className="">
+            <label className="label cursor-pointer">
+              <span className="label-text">Enable MFA?</span>
+              <input
+                ref={mfaEnableRef}
+                type="checkbox"
+                className="checkbox checkbox-primary"
+              />
+            </label>
+          </div>
           <button className="btn btn-info mt-10" onClick={signUpToAccount}>
             SignUp
           </button>

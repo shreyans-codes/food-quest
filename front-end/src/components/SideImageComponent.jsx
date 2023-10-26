@@ -10,7 +10,8 @@ const SideImageComponent = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        backgroundColor: "crimson",
+        backgroundColor: "dodgerblue",
+        overflow:"hidden"
       }}
     />
   );
