@@ -1,9 +1,8 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React, { useEffect, useState } from "react";
 import "@splidejs/react-splide/css";
 import RecipeCard from "./RecipeCard";
-import { SaveAlt } from "@mui/icons-material";
 import myHeaders from "../variables/myHeaders";
 
 const saveData = (item) => {
@@ -87,16 +86,12 @@ const Popular = () => {
           return (
             <SplideSlide key={item.id}>
               <div>
-                <RecipeCard item={itemSet} key={item["id"]}></RecipeCard>
-                <Button
-                  sx={{
-                    marginLeft: "0.7em",
-                  }}
-                  onClick={() => saveData(itemSet)}
-                  startIcon={<SaveAlt />}
-                >
-                  Save
-                </Button>
+                <RecipeCard
+                  item={itemSet}
+                  key={item["id"]}
+                  saveButton={true}
+                  onSaveClick={() => saveData(itemSet)}
+                ></RecipeCard>
               </div>
             </SplideSlide>
           );

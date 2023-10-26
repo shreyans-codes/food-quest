@@ -1,19 +1,10 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext, useState } from "react";
 import { useToken } from "../auth/useToken";
 import { useUser } from "../auth/useUser";
 import { AuthContext } from "../auth/AuthContext";
+import SideImageComponent from "../components/SideImageComponent";
 
 const LogInPage = () => {
   const [username, setUsername] = useState("");
@@ -22,133 +13,75 @@ const LogInPage = () => {
   const user = useUser();
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  
   const loginToAccount = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    console.log(password)
     const response = await axios.post("http://localhost:8080/auth/login", {
-      username: data.get("username"),
-      password: data.get("password"),
+      username: username,
+      password: password
     });
     const jwt_token = response.data["jwt"];
     console.log("Token: ", jwt_token);
     setToken(jwt_token);
-    dispatch({ type: "LOGIN", payload: user });
-    navigate("/");
-    return <Navigate to={"/"} />;
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
+    // MFA Enabled
+    if(jwt_token==="")
+    {
+      dispatch({ type: "LOGIN-VERIFY", payload: jwt_token });
+      navigate("/verify", {state: {username: username,password: password}});
+    }
+    //MFA Disabled
+    else{
+      dispatch({ type: "LOGIN", payload: jwt_token });
+      navigate("/");
+    }
   };
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-        sx={{
-          backgroundImage: "url(https://source.unsplash.com/random?wallpapers)",
-          backgroundRepeat: "no-repeat",
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        md={5}
-        component={Paper}
-        elevation={6}
-        square
-        sx={{
-          backgroundColor: (t) =>
-            t.palette.mode === "light"
-              ? t.palette.grey[50]
-              : t.palette.grey[900],
-        }}
-      >
-        <Box
-          sx={{
-            my: 8,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Log in to FoodQuest
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={loginToAccount}
-            sx={{ mt: 1 }}
-          >
-            <TextField
+    <div style={{ height: "100vh" }}>
+      <div className="grid" style={{ gridTemplateColumns: "7fr 5fr" }}>
+        <SideImageComponent />
+        <div className="form-control w-full max-w-lg m-auto mt-10">
+          <article className="prose">
+            <h1>Log in to your account</h1>
+          </article>
+          <div>
+            <label className="label">
+              <span className="label-text">First Name</span>
+            </label>
+            <input
+              type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              margin="normal"
-              required
-              fullWidth
-              color="secondary"
-              id="username"
-              label="Enter Username"
-              name="username"
-              autoComplete="username"
-              sx={{
-                color: "white",
-              }}
-              autoFocus
+              placeholder="Type here"
+              className="input input-bordered w-full"
             />
-            <TextField
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              margin="normal"
-              required
-              fullWidth
-              color="secondary"
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Log In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                Don't have an account?
-                <Link href="#">{"Sign Up"}</Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Grid>
-    </Grid>
+          </div>
+          <label className="label">
+            <span className="label-text">Password</span>
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Type here"
+            className="input input-bordered w-full"
+          />
+          <button className="btn btn-info mt-10" onClick={loginToAccount}>
+            Log In
+          </button>
+          {/* 
+           // TODO: Have a Forgot Password button 
+          */}
+          <span className="mx-auto mt-2">
+            Don't have an account?{" "}
+            <a className="link-primary" href="/signup">
+              Sign Up
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
   );
 };
 

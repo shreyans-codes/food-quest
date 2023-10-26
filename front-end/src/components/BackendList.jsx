@@ -1,17 +1,15 @@
 import { Button, Typography } from "@mui/material";
-import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React, { useCallback, useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import { DeleteOutline } from "@mui/icons-material";
-import jwt_token from "../variables/jwt_token";
+import myHeaders from "../variables/myHeaders";
 
-var myHeaders = new Headers();
-myHeaders.append("Authorization", `Bearer ${localStorage.getItem("token")}`);
-myHeaders.append("Cookie", "JSESSIONID=863EF35CE0D4CF579E1D3EFDC80AA317");
+var backendHeaders = myHeaders;
 const deleteData = (id) => {
   var requestOptions = {
     method: "DELETE",
-    headers: myHeaders,
+    headers: backendHeaders,
     redirect: "follow",
   };
 
@@ -71,19 +69,12 @@ const BackendList = () => {
           console.log(item.name);
           return (
             <SplideSlide key={item.id}>
-              <div>
-                <RecipeCard item={itemSet} key={item.id} />
-                <Button
-                  sx={{
-                    marginLeft: "0.7em",
-                  }}
-                  onClick={() => deleteData(item.id)}
-                  startIcon={<DeleteOutline />}
-                  color="error"
-                >
-                  Delete
-                </Button>
-              </div>
+              <RecipeCard
+                item={itemSet}
+                key={item["id"]}
+                deleteButton={true}
+                onDeleteClick={() => deleteData(item.id)}
+              />
             </SplideSlide>
           );
         })}
