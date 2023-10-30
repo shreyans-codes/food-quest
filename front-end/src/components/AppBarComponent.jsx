@@ -31,19 +31,19 @@ const AppBarComponent = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Homepage</a>
+              <a href="/">Homepage</a>
             </li>
             <li>
-              <a>Portfolio</a>
+              <a href="/">Saved</a>
             </li>
             <li>
-              <a>About</a>
+              <a href="/about">About</a>
             </li>
           </ul>
         </div>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost normal-case text-xl">Food Quest</a>
+        <a className="btn btn-ghost normal-case text-xl" href="/">Food Quest</a>
       </div>
       <div className="navbar-end">
         {/* Search Icon */}

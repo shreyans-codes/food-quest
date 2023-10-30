@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideImageComponent from "../components/SideImageComponent";
-import VerifyPage from "./VerifyPage";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
