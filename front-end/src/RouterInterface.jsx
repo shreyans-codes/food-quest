@@ -17,9 +17,7 @@ const RouterInterface = () => {
 
   const currentUser = useContext(AuthContext);
   const RequireAuth = ({ children }) => {
-    console.log(currentUser);
     if (currentUser.currentUser === null) {
-      console.log("Here with null");
       if (currentUser.isEnabled) {
         return <Navigate to={"/verify"} />;
       } else {

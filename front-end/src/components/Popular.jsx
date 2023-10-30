@@ -4,17 +4,13 @@ import React, { useEffect, useState } from "react";
 import "@splidejs/react-splide/css";
 import RecipeCard from "./RecipeCard";
 import myHeaders from "../variables/myHeaders";
+import { useDispatch, useSelector } from "react-redux";
+import { addRecipe } from "../redux/recipeListSlice";
 
-const saveData = (item) => {
+const saveData = (raw) => {
   var popularHeader = myHeaders;
-
-  var raw = JSON.stringify({
-    title: item.title,
-    description: item.summary,
-    imageUrl: item.image,
-  });
-  console.log(raw);
-
+  
+  
   var requestOptions = {
     method: "POST",
     headers: popularHeader,
@@ -23,19 +19,22 @@ const saveData = (item) => {
   };
 
   fetch("http://localhost:8080/api/recipe", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.log("error", error));
+  .then((response) => response.text())
+  .then((result) => {
+    // console.log(result);
+  })
+  .catch((error) => console.log("error", error));
 };
 
 const Popular = () => {
+  const recipeList = useSelector((state) => state.recipeCollection.recipeList);
+  const dispatch = useDispatch()
   const [popular, setPopular] = useState([]);
   const numberOfRecipes = 10;
   const storageVal = "popular";
   const tags = ["vegetarian"];
   useEffect(() => {
     const check = localStorage.getItem(storageVal);
-    console.log(import.meta.env.VITE_APP_API_KEY);
     if (check) {
       setPopular(JSON.parse(check));
     } else {
@@ -46,9 +45,7 @@ const Popular = () => {
       )
         .then((response) => response.json())
         .then((data, i) => {
-          console.log(data, i);
           setPopular(data["recipes"]);
-          console.log("Popular:", popular);
           localStorage.setItem(storageVal, JSON.stringify(data.recipes));
         })
         .catch((error) => {
@@ -82,7 +79,6 @@ const Popular = () => {
             image: item["image"],
             summary: item["summary"],
           };
-          console.log("Being Called with: ", item["title"]);
           return (
             <SplideSlide key={item.id}>
               <div>
@@ -90,7 +86,16 @@ const Popular = () => {
                   item={itemSet}
                   key={item["id"]}
                   saveButton={true}
-                  onSaveClick={() => saveData(itemSet)}
+                  onSaveClick={() => {
+                    var raw = JSON.stringify({
+                      title: item.title,
+                      description: item.summary,
+                      imageUrl: item.image,
+                    });
+                    saveData(raw);
+                    dispatch(addRecipe(itemSet));
+                    console.log(recipeList)
+                  }}
                 ></RecipeCard>
               </div>
             </SplideSlide>

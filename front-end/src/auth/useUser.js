@@ -5,7 +5,7 @@ import { useToken } from "./useToken";
 
 export const getUserFromToken = (token) => {
   if (!token) {
-    console.log("Recieved token: ", token);
+    // console.log("Recieved token: ", token);
     return null;
   }
   const encodedPayload = token.split(".")[1];

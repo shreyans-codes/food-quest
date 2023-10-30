@@ -23,8 +23,8 @@ const SignUp = () => {
       lastName: lastName,
       mfaEnabled: mfaEnableRef.current.checked,
     });
-    console.log("Response from registration: ", response.data);
-    if (response.status === 200) {
+    console.log("Response from registration: ", response);
+    if (response.status < 300 ) {
       document.getElementById("my_modal").showModal();
       if (mfaEnableRef.current.checked)
         navigate("/verify", {state: {username: username,password: password, secretImage: response.data.secretImageUri}})

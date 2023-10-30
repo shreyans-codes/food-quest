@@ -46,6 +46,7 @@ const AppBarComponent = () => {
         <a className="btn btn-ghost normal-case text-xl">Food Quest</a>
       </div>
       <div className="navbar-end">
+        {/* Search Icon */}
         <button className="btn btn-ghost btn-circle">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,22 +64,24 @@ const AppBarComponent = () => {
           </svg>
         </button>
         <button onClick={handleLogout} className="btn btn-ghost btn-circle">
+          {/* Logout Icon */}
           <div className="indicator">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
+              width="24"
+              height="24"
               viewBox="0 0 24 24"
+              fill="none"
               stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="feather feather-log-out"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-              />
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
           </div>
         </button>
       </div>

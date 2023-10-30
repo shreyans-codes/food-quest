@@ -4,24 +4,32 @@ import React, { useCallback, useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import { DeleteOutline } from "@mui/icons-material";
 import myHeaders from "../variables/myHeaders";
+import { useDispatch, useSelector } from "react-redux";
+import { removeRecipe, setRecipeList } from "../redux/recipeListSlice";
 
 var backendHeaders = myHeaders;
-const deleteData = (id) => {
+const deleteData = async (id) => {
   var requestOptions = {
     method: "DELETE",
     headers: backendHeaders,
     redirect: "follow",
   };
-
+  var responseCode;
   fetch(`http://localhost:8080/api/recipe/delete/${id}`, requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
+    .then((response) => {
+      responseCode = response.status;
+      response.text();
+    })
+    .then((result) => console.log("Result: ", result))
     .catch((error) => console.log("error", error));
+    return responseCode;
 };
 
 const BackendList = () => {
+  const recipeList = useSelector((state) => state.recipeCollection.recipeList);
+  const dispatch = useDispatch();
   const [recipe, setRecipe] = useState([]);
-  const fetchData = useCallback(() => {
+  useEffect(() => {
     var requestOptions = {
       method: "GET",
       headers: myHeaders,
@@ -30,15 +38,14 @@ const BackendList = () => {
 
     fetch("http://localhost:8080/api/recipe", requestOptions)
       .then((response) => response.json())
-      .then((result, i) => {
+      .then((result) => {
         setRecipe(result);
-        console.log(recipe);
+        dispatch(setRecipeList(result));
+        console.log(result);
+        // console.log("New Recipe List: ", recipeList)
       })
       .catch((error) => console.log("ERROR: ", error));
   }, []);
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   return (
     <div>
@@ -60,20 +67,23 @@ const BackendList = () => {
           gap: "5rem",
         }}
       >
-        {recipe.map((item) => {
+        {recipeList.map((item) => {
           const itemSet = {
             title: item.title,
             image: item.imageUrl,
             summary: item.description,
           };
-          console.log(item.name);
+          console.log("Name: ", item.title);
           return (
             <SplideSlide key={item.id}>
               <RecipeCard
                 item={itemSet}
-                key={item["id"]}
                 deleteButton={true}
-                onDeleteClick={() => deleteData(item.id)}
+                onDeleteClick={() => {
+                  deleteData(item.id);
+                  dispatch(removeRecipe(itemSet));
+                  console.log("New Recipe List: ", recipeList);
+                }}
               />
             </SplideSlide>
           );
