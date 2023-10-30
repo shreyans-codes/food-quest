@@ -1,8 +1,6 @@
-import { Button, Typography } from "@mui/material";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
-import { DeleteOutline } from "@mui/icons-material";
 import myHeaders from "../variables/myHeaders";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRecipe, setRecipeList } from "../redux/recipeListSlice";
@@ -22,7 +20,7 @@ const deleteData = async (id) => {
     })
     .then((result) => console.log("Result: ", result))
     .catch((error) => console.log("error", error));
-    return responseCode;
+  return responseCode;
 };
 
 const BackendList = () => {
@@ -49,14 +47,9 @@ const BackendList = () => {
 
   return (
     <div>
-      <Typography
-        variant="h3"
-        style={{
-          marginLeft: "3rem",
-        }}
-      >
-        From the database
-      </Typography>
+      <article className="prose ml-12">
+        <h1>From the database</h1>
+      </article>
       <Splide
         tag="section"
         options={{

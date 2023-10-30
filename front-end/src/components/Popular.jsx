@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React, { useEffect, useState } from "react";
 import "@splidejs/react-splide/css";
@@ -55,14 +54,10 @@ const Popular = () => {
   }, []);
   return (
     <>
-      <Typography
-        variant="h3"
-        sx={{
-          marginLeft: "3rem",
-        }}
-      >
-        Popular Picks
-      </Typography>
+      <article className="prose ml-12">
+        <h1>Popular Picks</h1>
+      </article>
+        
       <Splide
         tag="section"
         options={{

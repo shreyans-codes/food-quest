@@ -3,14 +3,12 @@ import { AuthContext, AuthContextProvider } from "./auth/AuthContext";
 import { Navigate, Route, Routes } from "react-router";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 import App from "./App";
-import { useTheme } from "@mui/material";
 import LogInPage from "./pages/LogInPage";
 import SignUp from "./pages/SignUp";
 import VerifyPage from "./pages/VerifyPage";
 
 const RouterInterface = () => {
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
-  const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   // ? Can't use navigate here
   // const navigate = useNavigate();

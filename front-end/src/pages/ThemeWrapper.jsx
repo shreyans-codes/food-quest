@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme } from "@mui/material";
+
 import React from "react";
 import RouterInterface from "../RouterInterface";
 import { Provider } from "react-redux";
@@ -17,24 +17,13 @@ export default function ToggleColorMode() {
     []
   );
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode]
-  );
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
         <Provider store={store}>
           {console.log(store.getState())}
           <RouterInterface />
         </Provider>
-      </ThemeProvider>
     </ColorModeContext.Provider>
   );
 }
