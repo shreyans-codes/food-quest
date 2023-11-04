@@ -66,7 +66,6 @@ const BackendList = () => {
             image: item.imageUrl,
             summary: item.description,
           };
-          console.log("Name: ", item.title);
           return (
             <SplideSlide key={item.id}>
               <RecipeCard

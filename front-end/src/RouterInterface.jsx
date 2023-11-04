@@ -6,6 +6,7 @@ import App from "./App";
 import LogInPage from "./pages/LogInPage";
 import SignUp from "./pages/SignUp";
 import VerifyPage from "./pages/VerifyPage";
+import { useSelector } from "react-redux";
 
 const RouterInterface = () => {
   const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
@@ -13,14 +14,11 @@ const RouterInterface = () => {
   // ? Can't use navigate here
   // const navigate = useNavigate();
 
-  const currentUser = useContext(AuthContext);
+  const { user } = useSelector((state) => state.authActions);
   const RequireAuth = ({ children }) => {
-    if (currentUser.currentUser === null) {
-      if (currentUser.isEnabled) {
-        return <Navigate to={"/verify"} />;
-      } else {
-        return <Navigate to={"/login"} />;
-      }
+    console.log("User: ", user)
+    if (user === null) {
+      return <Navigate to={"/login"} />
     } else {
       return children;
     }

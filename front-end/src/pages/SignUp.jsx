@@ -14,6 +14,14 @@ const SignUp = () => {
   const navigate = useNavigate();
   const signUpToAccount = async (event) => {
     event.preventDefault();
+    const userData = {
+      email: email,
+      username: username,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      mfaEnabled: mfaEnableRef.current.checked,
+    };
     const response = await axios.post("http://localhost:8080/auth/register", {
       email: email,
       username: username,
