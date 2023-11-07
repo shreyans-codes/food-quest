@@ -2,12 +2,17 @@ package com.sheru.Recipe.Api.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
     @Id

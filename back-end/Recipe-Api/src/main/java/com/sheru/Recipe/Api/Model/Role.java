@@ -1,10 +1,12 @@
 package com.sheru.Recipe.Api.Model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Table(name = "roles")
+@Builder
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
