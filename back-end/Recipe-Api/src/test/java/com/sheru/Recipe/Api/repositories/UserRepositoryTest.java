@@ -20,8 +20,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-
-     {
+    public void UserRepository_SaveAll_ReturnSavedUser() {
 
         //Arrange
         User shreyans = User.builder()
