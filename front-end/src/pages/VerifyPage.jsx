@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToken } from "../auth/useToken";
 import { AuthContext } from "../auth/AuthContext";
+import BASE_URL from "../variables/base_url";
 
 const VerifyPage = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const VerifyPage = () => {
   console.log(recievedData.username);
   const verifyMFACode = async (event) => {
     event.preventDefault();
-    const response = await axios.post("http://localhost:8080/auth/verify", {
+    const response = await axios.post(BASE_URL + "/auth/verify", {
       username: recievedData.username,
       password: recievedData.password,
       code: code,

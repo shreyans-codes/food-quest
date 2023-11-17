@@ -5,11 +5,11 @@ import RecipeCard from "./RecipeCard";
 import myHeaders from "../variables/myHeaders";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecipe } from "../redux/recipeListSlice";
+import BASE_URL from "../variables/base_url";
 
 const saveData = (raw) => {
   var popularHeader = myHeaders;
-  
-  
+
   var requestOptions = {
     method: "POST",
     headers: popularHeader,
@@ -17,17 +17,17 @@ const saveData = (raw) => {
     redirect: "follow",
   };
 
-  fetch("http://localhost:8080/api/recipe", requestOptions)
-  .then((response) => response.text())
-  .then((result) => {
-    // console.log(result);
-  })
-  .catch((error) => console.log("error", error));
+  fetch(BASE_URL + "/recipe", requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+      // console.log(result);
+    })
+    .catch((error) => console.log("error", error));
 };
 
 const Popular = () => {
   const recipeList = useSelector((state) => state.recipeCollection.recipeList);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [popular, setPopular] = useState([]);
   const numberOfRecipes = 10;
   const storageVal = "popular";
@@ -57,7 +57,7 @@ const Popular = () => {
       <article className="prose ml-12">
         <h1>Popular Picks</h1>
       </article>
-        
+
       <Splide
         tag="section"
         options={{
@@ -89,7 +89,7 @@ const Popular = () => {
                     });
                     saveData(raw);
                     dispatch(addRecipe(itemSet));
-                    console.log(recipeList)
+                    console.log(recipeList);
                   }}
                 ></RecipeCard>
               </div>

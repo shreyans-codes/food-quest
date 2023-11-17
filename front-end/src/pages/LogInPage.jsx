@@ -5,6 +5,7 @@ import { useToken } from "../auth/useToken";
 import { useUser } from "../auth/useUser";
 import { AuthContext } from "../auth/AuthContext";
 import SideImageComponent from "../components/SideImageComponent";
+import BASE_URL from "../variables/base_url";
 
 const LogInPage = () => {
   const [username, setUsername] = useState("");
@@ -13,25 +14,26 @@ const LogInPage = () => {
   const user = useUser();
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const loginToAccount = async (event) => {
     event.preventDefault();
-    console.log(password)
-    const response = await axios.post("http://localhost:8080/auth/login", {
+    console.log(password);
+    const response = await axios.post(BASE_URL + "/auth/login", {
       username: username,
-      password: password
+      password: password,
     });
     const jwt_token = response.data["jwt"];
     console.log("Token: ", jwt_token);
     setToken(jwt_token);
     // MFA Enabled
-    if(jwt_token==="")
-    {
+    if (jwt_token === "") {
       dispatch({ type: "LOGIN-VERIFY", payload: jwt_token });
-      navigate("/verify", {state: {username: username,password: password}});
+      navigate("/verify", {
+        state: { username: username, password: password },
+      });
     }
     //MFA Disabled
-    else{
+    else {
       dispatch({ type: "LOGIN", payload: jwt_token });
       navigate("/");
     }

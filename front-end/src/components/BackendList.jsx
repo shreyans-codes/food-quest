@@ -4,6 +4,7 @@ import RecipeCard from "./RecipeCard";
 import myHeaders from "../variables/myHeaders";
 import { useDispatch, useSelector } from "react-redux";
 import { removeRecipe, setRecipeList } from "../redux/recipeListSlice";
+import BASE_URL from "../variables/base_url";
 
 var backendHeaders = myHeaders;
 const deleteData = async (id) => {
@@ -13,7 +14,7 @@ const deleteData = async (id) => {
     redirect: "follow",
   };
   var responseCode;
-  fetch(`http://localhost:8080/api/recipe/delete/${id}`, requestOptions)
+  fetch(`${BASE_URL}/recipe/delete/${id}`, requestOptions)
     .then((response) => {
       responseCode = response.status;
       response.text();
@@ -34,7 +35,7 @@ const BackendList = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:8080/api/recipe", requestOptions)
+    fetch(BASE_URL + "/recipe", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setRecipe(result);

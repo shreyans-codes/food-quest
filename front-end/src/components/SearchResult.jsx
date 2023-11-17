@@ -1,6 +1,7 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React from "react";
 import myHeaders from "../variables/myHeaders";
+import BASE_URL from "../variables/base_url";
 
 const saveData = (item) => {
   var searchHeader = myHeaders;
@@ -18,7 +19,7 @@ const saveData = (item) => {
     redirect: "follow",
   };
 
-  fetch("http://localhost:8080/api/recipe", requestOptions)
+  fetch(BASE_URL + "/recipe", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.log("error", error));

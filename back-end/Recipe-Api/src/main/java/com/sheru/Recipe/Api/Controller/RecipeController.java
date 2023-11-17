@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
-@RequestMapping("api/recipe")
+@RequestMapping("/recipe")
 @CrossOrigin("*")
 public class RecipeController {
     private final RecipeService recipeService;
@@ -35,13 +34,13 @@ public class RecipeController {
     }
 
     @PutMapping("/update/{recipeId}")
-    public Recipe updateRecipe(@PathVariable Long recipeId, @RequestParam(required = false) String name, @RequestParam(required = false) String desc) {
+    public Recipe updateRecipe(@PathVariable Long recipeId, @RequestParam(required = false) String name,
+            @RequestParam(required = false) String desc) {
         return recipeService.updateRecipeDetails(recipeId, name, desc);
     }
 
     @DeleteMapping("/delete/{recipeId}")
-    public void deleteRecipe(@PathVariable Long recipeId)
-    {
+    public void deleteRecipe(@PathVariable Long recipeId) {
         recipeService.deleteRecipe(recipeId);
     }
 }

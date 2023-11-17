@@ -1,7 +1,8 @@
 import axios from "axios";
+import BASE_URL from "../variables/base_url";
 
 export const registerUser = async (userData) => {
-  const response = await axios.post("http://localhost:8080/auth/register", {
+  const response = await axios.post(BASE_URL + "/auth/register", {
     email: userData.email,
     username: userData.username,
     password: userData.password,
@@ -17,7 +18,7 @@ export const registerUser = async (userData) => {
 };
 
 export const loginToAccount = async (userData) => {
-  const response = await axios.post("http://localhost:8080/auth/login", {
+  const response = await axios.post(BASE_URL + "/auth/login", {
     username: userData.username,
     password: userData.password,
   });
@@ -34,7 +35,7 @@ export const logout = () => {
 };
 
 export const verifyCode = async (userData, code) => {
-  const response = await axios.post("http://localhost:8080/auth/verify", {
+  const response = await axios.post(BASE_URL + "/auth/verify", {
     username: userData.username,
     password: userData.password,
     code: code,

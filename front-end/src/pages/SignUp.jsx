@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideImageComponent from "../components/SideImageComponent";
+import BASE_URL from "../variables/base_url";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ const SignUp = () => {
       lastName: lastName,
       mfaEnabled: mfaEnableRef.current.checked,
     };
-    const response = await axios.post("http://localhost:8080/auth/register", {
+    const response = await axios.post(BASE_URL + "/auth/register", {
       email: email,
       username: username,
       password: password,
@@ -31,10 +32,16 @@ const SignUp = () => {
       mfaEnabled: mfaEnableRef.current.checked,
     });
     console.log("Response from registration: ", response);
-    if (response.status < 300 ) {
+    if (response.status < 300) {
       document.getElementById("my_modal").showModal();
       if (mfaEnableRef.current.checked)
-        navigate("/verify", {state: {username: username,password: password, secretImage: response.data.secretImageUri}})
+        navigate("/verify", {
+          state: {
+            username: username,
+            password: password,
+            secretImage: response.data.secretImageUri,
+          },
+        });
       else navigate("/login");
     }
     // document.getElementById("my_modal").showModal();
